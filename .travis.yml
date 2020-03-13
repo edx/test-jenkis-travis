@@ -1,0 +1,32 @@
+language: python
+sudo: false
+cache: pip
+matrix:
+  include:
+  - python: 3.5
+    env: TOXENV=py3
+  - python: 3.5
+    env: TOXENV=quality
+addons:
+  apt:
+    packages:
+    - libblas-dev
+    - liblapack-dev
+    - gfortran
+install:
+- pip install tox
+- pip install coveralls
+script:
+- python test.py
+after_success:
+- coveralls
+deploy:
+  - provider: pypi
+    user: edx
+    password:
+      secure:
+    distributions: sdist bdist_wheel
+    on:
+      tags: true
+      python: 3.5
+      condition: "$TOXENV = quality"
