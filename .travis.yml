@@ -21,12 +21,10 @@ script:
 after_success:
 - coveralls
 deploy:
-  - provider: pypi
-    user: edx
-    password:
-      secure:
-    distributions: sdist bdist_wheel
-    on:
-      tags: true
-      python: 3.5
-      condition: "$TOXENV = quality"
+  provider: pypi
+  user: edx
+  distributions: sdist bdist_wheel
+  on:
+    tags: true
+    python: 3.5
+    condition: "$TOXENV = quality"
